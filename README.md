@@ -1,3 +1,3 @@
-# Note
+# Wild Oasis
 
-The reactdom version being exceuted on the client should be 18 or above because of the server based react.
+A customer facing website built using the Next Js Framework
