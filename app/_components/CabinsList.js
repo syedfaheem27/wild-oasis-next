@@ -5,6 +5,8 @@ import { getCabins } from "@/app/_lib/data-service";
 const CabinsList = async () => {
   const cabins = await getCabins();
 
+  if (!cabins.length) return null;
+
   return (
     <>
       {cabins.length > 0 && (
