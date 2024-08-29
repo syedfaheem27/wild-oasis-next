@@ -2,6 +2,12 @@ import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
+//since, we're invalidating the data cache for the cabins page
+//after an hour, the data cache for the individual cabins need
+//invalidated also, to keep the data in sync as these are also
+//gnerated as static pages.
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }) {
   const { cabinId: id } = params;
   const { name } = await getCabin(id);
@@ -24,6 +30,8 @@ export default async function Page({ params }) {
 
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
+
+  console.log(regularPrice);
 
   return (
     <div className="max-w-6xl mx-auto mt-8">

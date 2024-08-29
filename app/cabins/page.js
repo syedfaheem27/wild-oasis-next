@@ -1,12 +1,19 @@
 import { Suspense } from "react";
 import CabinsList from "@/app/_components/CabinsList";
 import Spinner from "@/app/_components/Spinner";
+import { unstable_noStore as noStore } from "next/cache";
+
+// export const revalidate = 0;
+// export const dynamic = "force-dynamic";
+
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Cabins",
 };
 
 export default function Page() {
+  // noStore();
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
