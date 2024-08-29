@@ -1,14 +1,16 @@
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+// import { unstable_noStore as noStore } from "next/cache";
 
 //since, we're invalidating the data cache for the cabins page
 //after an hour, the data cache for the individual cabins need
 //invalidated also, to keep the data in sync as these are also
 //gnerated as static pages.
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }) {
+  // noStore();
   const { cabinId: id } = params;
   const { name } = await getCabin(id);
 
@@ -79,7 +81,7 @@ export default async function Page({ params }) {
 
       <div>
         <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival.
+          Reserve today. Pay on arrival. {regularPrice}
         </h2>
       </div>
     </div>

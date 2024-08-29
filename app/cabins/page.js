@@ -1,12 +1,17 @@
 import { Suspense } from "react";
 import CabinsList from "@/app/_components/CabinsList";
 import Spinner from "@/app/_components/Spinner";
-import { unstable_noStore as noStore } from "next/cache";
+
+/*Instead of doing it here, 
+  doing it in CabinsList, will opt out the entire 
+  page from the data cache which can be better when we 
+  think of partial pre rendering
+*/
 
 // export const revalidate = 0;
 // export const dynamic = "force-dynamic";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export const metadata = {
   title: "Cabins",
@@ -20,8 +25,8 @@ export default function Page() {
         Our Luxury Cabins
       </h1>
       <p className="text-primary-200 text-lg mb-10">
-        Cozy yet luxurious cabins, located right in the heart of the Italian
-        Dolomites. Imagine waking up to beautiful mountain views, spending your
+        Cozy yet luxurious cabins, located right in the heart of the Kashmir
+        valley. Imagine waking up to beautiful mountain views, spending your
         days exploring the dark forests around, or just relaxing in your private
         hot tub under the stars. Enjoy nature&apos;s beauty in your own little
         home away from home. The perfect spot for a peaceful, calm vacation.
