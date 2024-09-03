@@ -8,7 +8,7 @@ import Image from "next/image";
 //after an hour, the data cache for the individual cabins need
 //invalidated also, to keep the data in sync as these are also
 //gnerated as static pages.
-export const revalidate = 86400;
+// export const revalidate = 86400;
 
 export async function generateMetadata({ params }) {
   // noStore();

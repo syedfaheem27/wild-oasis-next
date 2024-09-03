@@ -12,7 +12,9 @@ import Filter from "../_components/Filter";
 // export const revalidate = 0;
 // export const dynamic = "force-dynamic";
 
-export const revalidate = 86400;
+//since, uses search params, it will be
+//generated on demand
+// export const revalidate = 86400;
 
 export const metadata = {
   title: "Cabins",
