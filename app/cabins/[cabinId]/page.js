@@ -1,7 +1,10 @@
+import Reservations from "@/app/_components/Reservations";
+import Spinner from "@/app/_components/Spinner";
 import TextExpander from "@/app/_components/TextExpander";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { Suspense } from "react";
 // import { unstable_noStore as noStore } from "next/cache";
 
 //since, we're invalidating the data cache for the cabins page
@@ -31,10 +34,14 @@ export default async function Page({ params }) {
 
   const cabin = await getCabin(cabinId);
 
+  // const [cabin, settings, bookedDates] = await Promise.all([
+  //   getCabin(cabinId),
+  //   getSettings(),
+  //   getBookedDatesByCabinId(cabinId),
+  // ]);
+
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
-
-  console.log(regularPrice);
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
@@ -83,9 +90,12 @@ export default async function Page({ params }) {
       </div>
 
       <div>
-        <h2 className="text-5xl font-semibold text-center">
-          Reserve today. Pay on arrival. {regularPrice}
+        <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve {name} today. Pay on arrival. {regularPrice}
         </h2>
+        <Suspense fallback={<Spinner />}>
+          <Reservations cabin={cabin} />
+        </Suspense>
       </div>
     </div>
   );
