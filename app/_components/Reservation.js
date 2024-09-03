@@ -3,7 +3,7 @@ import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
 
-export default async function Reservations({ cabin }) {
+export default async function Reservation({ cabin }) {
   const [settings, bookedDates] = await Promise.all([
     getSettings(),
     getBookedDatesByCabinId(cabin.id),
