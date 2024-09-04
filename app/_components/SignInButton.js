@@ -22,3 +22,6 @@ function SignInButton() {
 }
 
 export default SignInButton;
+
+//TODO: Instead of performing the signing in on the client side
+// do it on the server side
