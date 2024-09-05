@@ -8,14 +8,6 @@ export const authConfig = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  // callbacks: {
-  //   authorized({ req, token }) {
-  //     return !!token;
-  //   },
-  // },
-  pages: {
-    signIn: "/login",
-  },
 };
 const handler = NextAuth(authConfig);
 
