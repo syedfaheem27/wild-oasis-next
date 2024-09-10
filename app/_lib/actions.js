@@ -51,6 +51,14 @@ export async function updateGuest(formData) {
 }
 
 export async function deleteReservation(bookingId) {
+  //For testing purposes
+
+  await new Promise((res, rej) => {
+    setTimeout(res, 3000);
+  });
+
+  // throw new Error();
+
   const session = await auth();
 
   if (!session)
