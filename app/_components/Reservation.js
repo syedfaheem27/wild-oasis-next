@@ -15,7 +15,11 @@ export default async function Reservation({ cabin }) {
 
   return (
     <div className="overflow-hidden grid grid-cols-2 min-h-[400px]  border border-primary-300">
-      <DateSelector settings={settings} bookedDates={bookedDates} />
+      <DateSelector
+        settings={settings}
+        bookedDates={bookedDates}
+        cabin={cabin}
+      />
       {session?.user ? (
         <ReservationForm user={session.user} cabin={cabin} />
       ) : (
