@@ -19,8 +19,8 @@ import { useReservation } from "./ReservationContext";
 
 function isAlreadyBooked(range, datesArr) {
   return (
-    range.from &&
-    range.to &&
+    range?.from &&
+    range?.to &&
     datesArr.some((date) =>
       isWithinInterval(date, { start: range.from, end: range.to })
     )
@@ -30,20 +30,21 @@ function isAlreadyBooked(range, datesArr) {
 function DateSelector({ settings, bookedDates, cabin }) {
   const { range, setRange, resetRange } = useReservation();
 
-  const { regularPrice, discount } = cabin;
-  const numNights = differenceInDays(range?.to, range?.from) ?? 0;
-  const cabinPrice = numNights * (regularPrice - discount);
-  const { minBookingLength, maxBookingLength } = settings;
-
   const displayRange = isAlreadyBooked(range, bookedDates)
     ? { from: undefined, to: undefined }
     : range;
+
+  const { regularPrice, discount } = cabin;
+  const { minBookingLength, maxBookingLength } = settings;
+
+  const numNights = differenceInDays(displayRange?.to, displayRange?.from) ?? 0;
+  const cabinPrice = numNights * (regularPrice - discount);
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        selected={range}
+        selected={displayRange}
         onSelect={setRange}
         min={minBookingLength + 1}
         max={maxBookingLength}
@@ -86,7 +87,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {displayRange?.from || displayRange?.to ? (
           <button
             className="border border-primary-700 py-2 px-4 hover:bg-accent-300 hover:text-primary-950  text-sm font-semibold"
             onClick={resetRange}

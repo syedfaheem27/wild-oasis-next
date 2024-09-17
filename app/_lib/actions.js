@@ -50,12 +50,46 @@ export async function updateGuest(formData) {
   revalidatePath("/account/profile");
 }
 
+export async function createBooking(bookingData, formData) {
+  const session = await auth();
+
+  if (!session)
+    throw new Error("You must be logged in to perform this action!");
+
+  const newBooking = {
+    ...bookingData,
+    numNights: Number(bookingData.numNights),
+    cabinPrice: Number(bookingData.cabinPrice),
+    cabinId: Number(bookingData.cabinId),
+    guestId: session.user.guestId,
+    extrasPrice: 0,
+    totalPrice: Number(bookingData.cabinPrice),
+    status: "unconfirmed",
+    hasBreakfast: false,
+    isPaid: false,
+    observations: formData.get("observations").slice(0, 1000),
+    numGuests: Number(formData.get("numGuests")),
+  };
+
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be created");
+  }
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+  revalidatePath(`/account/reservations`);
+
+  redirect("/cabins/thankyou");
+}
+
 export async function deleteReservation(bookingId) {
   //For testing purposes
 
-  await new Promise((res, rej) => {
-    setTimeout(res, 3000);
-  });
+  // await new Promise((res, rej) => {
+  //   setTimeout(res, 3000);
+  // });
 
   // throw new Error();
 
@@ -98,7 +132,7 @@ export async function updateReservation(formData) {
   const bookingIds = bookings.map((booking) => booking.id);
 
   if (!bookingIds.includes(bookingId))
-    throw new Error("Your are not authorized to delete this booking!");
+    throw new Error("Your are not authorized to update this booking!");
 
   const numGuests = Number(formData.get("numGuests"));
   const observations = formData.get("observations");

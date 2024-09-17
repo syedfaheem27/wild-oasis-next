@@ -1,7 +1,11 @@
 import React from "react";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
-import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
+import {
+  getBookedDatesByCabinId,
+  getBooking,
+  getSettings,
+} from "../_lib/data-service";
 import { auth } from "../_lib/auth";
 import LoginMessage from "./LoginMessage";
 
